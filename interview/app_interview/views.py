@@ -27,8 +27,8 @@ class AnswersList(APIView):
 
 
 class QuestionsList(APIView):
-    def get(self, request):
-        questions = Questions.objects.all()
+    def get(self, request, interview_id):
+        questions = Questions.objects.filter(Interview=interview_id)
         serializer = QuestionsSerializer(questions, many=TabError)
         return Response(serializer.data)
 
