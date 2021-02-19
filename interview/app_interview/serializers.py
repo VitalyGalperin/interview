@@ -25,4 +25,4 @@ class OptionsSerializer(ModelSerializer):
 class AnswersSerializer(ModelSerializer):
     class Meta:
         model = Answers
-        fields = ('id', 'user', 'question', 'text_answer', 'choice_answer')
+        fields = ('id', 'user', 'anon_user', 'question', 'text_answer', 'choice_answer')

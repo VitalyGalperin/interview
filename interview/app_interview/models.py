@@ -48,12 +48,15 @@ class Options(models.Model):
 
 
 class Answers(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_link')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default='',
+                             related_name='user_link', verbose_name='Авторизованный пользователь')
+    anon_user = models.IntegerField(blank=True, null=True, default=None,
+                                    verbose_name='Анонимный пользователь')
     question = models.ForeignKey(Questions, on_delete=models.CASCADE, related_name='question_link')
     text_answer = models.CharField(max_length=500, null=True, blank=True, verbose_name='Текстовый ответ')
-    choice_answer = models.ForeignKey(Options, null=True, blank=True, on_delete=models.CASCADE, related_name='option_link')
+    choice_answer = models.ForeignKey(Options, null=True, blank=True, on_delete=models.CASCADE,
+                                      related_name='option_link')
 
     class Meta:
         verbose_name = 'Ответ пользователя'
         verbose_name_plural = 'Ответы пользователя'
-

@@ -19,5 +19,5 @@ class OptionsAdmin(admin.ModelAdmin):
 
 @admin.register(Answers)
 class AnswersAdmin(admin.ModelAdmin):
-    list_display = ('user', 'question', 'text_answer', 'choice_answer')
+    list_display = ('user', 'anon_user', 'question', 'text_answer', 'choice_answer')
 

@@ -13,12 +13,22 @@ class InterviewList(APIView):
 
 
 class AnswersList(APIView):
-    def get(self, request):
-        answers = Answers.objects.filter(user_id=self.request.user)
+    def get(self, request, user_id):
+        if request.user.is_authenticated and request.user.id == user_id:
+            user_id = self.request.user
+            answers = Answers.objects.filter(user_id=user_id)
+        else:
+            answers = Answers.objects.filter(anon_user=user_id)
         serializer = AnswersSerializer(answers, many=TabError)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request, user_id):
+        if request.user.is_authenticated and request.user.id == user_id:
+            request.data['anon_user'] = None
+            request.data['user'] = user_id
+        else:
+            request.data['anon_user'] = user_id
+            request.data['user'] = None
         serializer = AnswersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
